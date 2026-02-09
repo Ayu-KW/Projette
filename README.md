@@ -1,87 +1,50 @@
-# Welcome to React Router!
+# 1.はじめに
 
-A modern, production-ready template for building full-stack React applications using React Router.
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
-
-## Features
-
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
-
-## Getting Started
-
-### Installation
-
-Install the dependencies:
-
-```bash
-npm install
-```
-
-### Development
-
-Start the development server with HMR:
-
-```bash
-npm run dev
-```
-
-Your application will be available at `http://localhost:5173`.
-
-## Building for Production
-
-Create a production build:
-
-```bash
-npm run build
-```
-
-## Deployment
-
-### Docker Deployment
-
-To build and run using Docker:
-
-```bash
-docker build -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
-```
-
-The containerized application can be deployed to any platform that supports Docker, including:
-
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+作成しているのは「案件管理システム」
+既存のツールだとNotionなどがあるが、もう少しこだわった管理にしたいと考えたのがきっかけ
 
 ---
 
-Built with ❤️ using React Router.
+# 2.開発環境（Docker）
+
+## 初回起動時
+
+```
+docker compose up --build
+```
+
+## 2回目以降
+
+```
+docker compose up
+```
+
+---
+
+# 3.概要
+
+技術概要は以下（想定なので変更する可能性がある）
+
+| 項目                          | 内容                                                               |
+| ----------------------------- | ------------------------------------------------------------------ |
+| **言語**                      | TypeScript                                                         |
+| **フロントエンド**            | React                                                              |
+| **バックエンド**              | Node.js                                                            |
+| **フレームワーク**            | Remix                                                              |
+| **ORM**                       | Prisma                                                             |
+| **DB（開発環境）**            | Docker Compose の PostgreSQL                                       |
+| **DB（本番環境）**            | Supabase 無料プラン（PostgreSQL）                                  |
+| **コンテナ環境**              | Docker（開発・本番共通）                                           |
+| **Lint / Formatter / テスト** | ~~ESLint / Prettier~~ / [Biome.js](https://biomejs.dev/ja/) / Jest |
+| **CSS/UI**                    | Tailwind CSS + Material-UI（MUI）                                  |
+| **メール受信練習**            | MailHog（開発環境のみ）                                            |
+| **DB GUIツール**              | DBeaver（ローカルで使用）                                          |
+| **環境変数管理**              | 開発: `.env` / 本番: Fly.io Secrets                                |
+| **Prisma運用**                | 開発: `migrate dev` / 本番: `migrate deploy`Seedは一旦不要         |
+| **外部API**                   | 日本郵便API（郵便番号→住所取得、Remix経由）                        |
+| **APIトークン運用**           | 毎回発行（トークン切れ回避）                                       |
+| **エラー通知**                | ユーザー: Toast / 開発者: フロント・サーバーで詳細ログ出力         |
+| **ログ管理**                  | 最低限 console.log / console.error、将来外部サービス導入可能       |
+| **デプロイ**                  | Fly.io 手動デプロイ、CI/CDは後から検討                             |
+| **ドメイン**                  | `<app>.fly.dev`（Fly.io提供の無料ドメイン）                        |
+| **SSL**                       | Let’s Encrypt 自動付与                                             |
