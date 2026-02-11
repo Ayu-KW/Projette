@@ -1,13 +1,21 @@
 import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
+import { useOutletContext } from "react-router";
+import type { Session } from "@supabase/supabase-js";
 
-export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
-  ];
-}
+type RootContext = {
+  session: Session | null;
+};
 
 export default function Home() {
-  return <Welcome />;
+  const { session } = useOutletContext<RootContext>();
+
+  return (
+    <div className="p-6">
+      {session ? (
+        <div>✅ Logged in: {session.user.email}</div>
+      ) : (
+        <div>❌ Not logged in</div>
+      )}
+    </div>
+  );
 }

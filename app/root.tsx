@@ -6,9 +6,21 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
-
+import { useEffect, useState } from "react";
 import type { Route } from "./+types/root";
+
+// ✅ Supabase
+import { supabase } from "~/lib/supabase.client";
+import type { Session } from "@supabase/supabase-js";
+
+// ✅ MUI
+import { ThemeProvider } from "@mui/material/styles";
+import { CssBaseline } from "@mui/material";
+import { theme } from "./theme";
+
 import "./app.css";
+
+/* --- links / Layout はそのまま --- */
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -41,9 +53,41 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
+/**
+ * ✅ App = グローバル Provider 層
+ * - Theme
+ * - Supabase session
+ */
 export default function App() {
-  return <Outlet />;
+  const [session, setSession] = useState<Session | null>(null);
+
+  useEffect(() => {
+    // 初期セッション取得
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session);
+    });
+
+    // セッション変更監視
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Outlet context={{ session }} />
+    </ThemeProvider>
+  );
 }
+
+/* --- ErrorBoundary はそのまま --- */
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   let message = "Oops!";
