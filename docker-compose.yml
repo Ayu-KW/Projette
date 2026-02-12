@@ -11,3 +11,11 @@ services:
     ports:
       - "5173:5173"
     command: npm run dev -- --host
+    container_name: react_app
+
+  lint:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: sh -c "npm ci && npx biome check ."
