@@ -1,7 +1,6 @@
 import { useOutletContext } from "react-router";
 
 import type { Session } from "@supabase/supabase-js";
-import type { Route } from "./+types/home";
 
 type RootContext = {
   session: Session | null;

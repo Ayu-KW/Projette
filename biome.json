@@ -2,7 +2,14 @@
   "$schema": "https://biomejs.dev/schemas/latest/schema.json",
   "files": {
     "ignoreUnknown": false,
-    "includes": ["**", "!**/node_modules", "!**/dist"]
+    "includes": [
+      "**",
+      "!**/node_modules",
+      "!**/dist",
+      "!**/.history",
+      "!**/build",
+      "!**/.react-router"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -51,6 +58,11 @@
       "lineWidth": 80,
       "trailingCommas": "none",
       "bracketSpacing": true
+    }
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
     }
   }
 }

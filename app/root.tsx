@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   isRouteErrorResponse,
   Links,
@@ -6,17 +7,17 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
-import { useEffect, useState } from "react";
-import type { Route } from "./+types/root";
+import { CssBaseline } from "@mui/material";
+// ✅ MUI
+import { ThemeProvider } from "@mui/material/styles";
+
+import { theme } from "./theme";
 
 // ✅ Supabase
 import { supabase } from "~/lib/supabase.client";
-import type { Session } from "@supabase/supabase-js";
 
-// ✅ MUI
-import { ThemeProvider } from "@mui/material/styles";
-import { CssBaseline } from "@mui/material";
-import { theme } from "./theme";
+import type { Session } from "@supabase/supabase-js";
+import type { Route } from "./+types/root";
 
 import "./app.css";
 
